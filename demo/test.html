@@ -1,0 +1,30 @@
+<html>
+  <head>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+  <script src="../src/jquery.segmentation.js" type="text/javascript"></script>
+  
+  <script>
+    $(document).ready(function(){
+    //20 - number of segments
+    //150 time out between calls
+    $('.test').segment(20, 150, function(el){
+        $(el).animate({
+            top: '+=150'
+        }, { duration: 100, queue: false });
+        $(el).fadeOut('fast');
+      });
+    });
+  </script>
+  
+  <style>
+    .wrap { margin: 10px; }
+    .test { background: #a00; width: 400px; height: 150px; }
+  </style>
+  </head>
+  
+  <body>
+    <div class="wrap">
+      <div class="test"></div>
+    </div>
+  </body>
+</html>
