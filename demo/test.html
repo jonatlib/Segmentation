@@ -7,17 +7,22 @@
     $(document).ready(function(){
     //20 - number of segments
     //150 time out between calls
-    $('.test').segment({
-      x: 1,
-      y: 20,
+    $('.t, .test').segment({
+      x: 10,
+      y: 6,
       reverse: true
-    }, 50, function(el, index, length, remove){
-        var duration = { duration: 300, queue: false };
-        $(el).animate({
+    }, 30, function(el, index, length, remove){
+        var duration = { duration: 700, queue: false };
+        if(index % 2){
+          $(el).animate({
+              top: '+=150'
+          }, duration);
+        }else{
+          $(el).animate({
             left: '+=150'
-        }, duration);
-        $(el).fadeOut(duration);
-        setTimeout(function(){ if(index >= length - 1) remove(); }, duration.duration);
+          }, duration);
+        }
+        $(el).fadeOut(duration.duration, function(){ $(el).remove(); if(index >= length - 1) remove(); });
       });
     });
   </script>
@@ -25,10 +30,29 @@
   <style>
     .wrap { margin: 10px; width: 478px; height: 253px; }
     .test, .original { padding: 20px; background: url('img.gif'); width: 438px; height: 213px; }
+    
+    .w { width: 600px; height: 400px; }
+    .t { width: 500px; height: 300px; background: #a00; padding: 50px; }
+    .t h1 { color: #fff; }
+    .t ul, .t li { display: block; }
+    .t li { float: left; margin: 0 0 0 10px; }
+    .t a { padding: 10px; background: #a33; }
   </style>
   </head>
   
   <body>
+    <div class="w">
+      <div class="t">
+        <h1>Ukazka</h1>
+        <ul>
+          <li><a href="#">Test</a></li>
+          <li><a href="#">Test</a></li>
+          <li><a href="#">Test</a></li>
+          <li><a href="#">Test</a></li>
+        </ul>
+      </div>
+    </div>
+  
     <div class="wrap">
       <div class="test">
         <h2>Tadaaa</h2>

@@ -1,5 +1,13 @@
 (function( $ ){
     $.fn.segment = function(params, timeout, animate){
+        if($(this).length > 1){
+          var result = [];
+          $.each($(this), function(k, v){
+            result.push( $(v).segment(params, timeout, animate) );
+          });
+          return result;
+        }
+        
         var countX = 1;
         var countY = 1;
         var reverse = false;
@@ -68,11 +76,11 @@
         var remove = function(){
           removeElement.remove();
         };
-        
         $.each( ( (!reverse) ? elements : elements.reverse() ) , function(k, v){
             setTimeout(function(){
                 animate(v, k, elements.length, remove);
             }, timeout * k);
         });
+        return this;
     };
 })( jQuery );
