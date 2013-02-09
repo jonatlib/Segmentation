@@ -9,30 +9,42 @@
     //150 time out between calls
     $('.test').segment({
       x: 1,
-      y: 10,
+      y: 20,
       reverse: true
-    }, 50, function(el){
+    }, 50, function(el, index, length, remove){
+        var duration = { duration: 300, queue: false };
         $(el).animate({
             left: '+=150'
-        }, { duration: 100, queue: false });
-        $(el).fadeOut('fast');
+        }, duration);
+        $(el).fadeOut(duration);
+        setTimeout(function(){ if(index >= length - 1) remove(); }, duration.duration);
       });
     });
   </script>
   
   <style>
-    .wrap { margin: 10px; }
-    .wrap > div { background: url('img.gif'); width: 478px; height: 253px; }
+    .wrap { margin: 10px; width: 478px; height: 253px; }
+    .test, .original { padding: 20px; background: url('img.gif'); width: 438px; height: 213px; }
   </style>
   </head>
   
   <body>
     <div class="wrap">
-      <div class="test"></div>
+      <div class="test">
+        <h2>Tadaaa</h2>
+        <p>Tohle je test</p>
+        <p>Tohle je test</p>
+        <ul> <li>aaa</li> </ul>
+      </div>
     </div>
     
     <div class="wrap">
-      <div class="original"></div>
+      <div class="original">
+        <h2>Tadaaa</h2>
+        <p>Tohle je test</p>
+        <p>Tohle je test</p>
+        <ul> <li>aaa</li> </ul>
+      </div>
     </div>
     
   </body>

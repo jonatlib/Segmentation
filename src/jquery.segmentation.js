@@ -14,11 +14,21 @@
           if(params['reverse'] != undefined) reverse = params['reverse'];
           //if(params[''] != undefined) = params['']; 
         }
-        var height = $(this).height();
-        var width  = $(this).width();
+        
+        var height = $(this).outerHeight();
+        var width  = $(this).outerWidth();
+        
+        var sourcePosition = $(this).position();
+        var sourceBackground = $(this).css('background'); 
 
-        var segmentWidth = width / countX;
-        var segmentHeight = height / countY;
+        var segmentWidth  = parseInt(width / countX);
+        var segmentHeight = parseInt(height / countY);
+        
+        var element = $(this).clone(); 
+        
+        $(this).css('overflow', 'show');
+        $(this).css('background', 'none');
+        $(this).html('');
         
         var elements = [];
         for(j = 0; j < countY; j++){
@@ -26,18 +36,23 @@
             var e = document.createElement('div');
             $(e).css('z-index', '100');
             $(e).css('float', 'left');
-            $(e).css('background', $(this).css('background'));
-            
-            var left = (width - i * segmentWidth);
-            var top = (height - j * segmentHeight);
-            
-            $(e).css('background-position', left + 'px ' + top + 'px');
+            $(e).css('overflow', 'hidden');
             $(e).css('height', segmentHeight + 'px');
             $(e).css('width',  segmentWidth  + 'px');
+                        
+            //var left = (width - i * segmentWidth);
+            //var top = (height - j * segmentHeight);
+            //$(e).css('background', sourceBackground);
+            //$(e).css('background-position', left + 'px ' + top + 'px');
+            
+            $(element).clone().css({
+              marginLeft: - i * segmentWidth,
+              marginTop : - j * segmentHeight
+            }).appendTo(e);
             
             var position = {
-                top: $(this).position().top + j * segmentHeight,
-                left: $(this).position().left + i * segmentWidth
+                top: sourcePosition.top + j * segmentHeight,
+                left: sourcePosition.left + i * segmentWidth
             };
             $(e).css('position', 'absolute');
             $(e).css(position);
@@ -47,15 +62,16 @@
            
             elements.push(e);
           }
-        }
+        }        
         
-        $(this).css('overflow', 'show');
-        $(this).css('background', 'none');
-        
+        var removeElement = $(this);
+        var remove = function(){
+          removeElement.remove();
+        };
         
         $.each( ( (!reverse) ? elements : elements.reverse() ) , function(k, v){
             setTimeout(function(){
-                animate(v);
+                animate(v, k, elements.length, remove);
             }, timeout * k);
         });
     };
