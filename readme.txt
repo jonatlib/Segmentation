@@ -1,4 +1,4 @@
-test on http://jsfiddle.net/M6YCs/16/
+test on http://jsfiddle.net/M6YCs/22/6/
 
 Have to be done:
 * Deal with content of element
